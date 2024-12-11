@@ -46,7 +46,7 @@ def struct_learn(
     
     time_start = time.time()    
     constrained_solver(dataset, model, unconstrained_solver, loss_fn, dag_fn)
-    vprint(f"Total Time: {time.time() - time_start}")
+    print(f"Total Time: {time.time() - time_start}")
     
     W_est = model.adj().detach().cpu().numpy()
     W_est[np.abs(W_est) < w_threshold] = 0

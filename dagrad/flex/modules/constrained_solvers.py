@@ -105,7 +105,7 @@ class PathFollowing(ConstrainedSolver):
 
             while success is False:
                 self.vprint(
-                    f"\nSolving unconstrained problem #{i} with mu={self.mu}, s={dag_fn.s} for {self.num_steps[i]} steps"
+                    f"\nSolving unconstrained problem #{i+1} with mu={self.mu}, s={dag_fn.s} for {self.num_steps[i]} steps"
                 )
                 unconstrained_solver.num_steps = self.num_steps[i]
                 success = unconstrained_solver(
@@ -176,7 +176,10 @@ class AugmentedLagrangian(ConstrainedSolver):
         self.validate_inputs()
 
         h = float("inf")
+        end = False
         for i in tqdm(range(self.num_iter)):
+            if end:
+                continue
             h_new = None
             while self.rho < self.rho_max:
                 def augmented_loss(output, target):
@@ -208,7 +211,7 @@ class AugmentedLagrangian(ConstrainedSolver):
 
                 while not success:
                     self.vprint(
-                        f"\nSolving ALM iteration #{i} with lambda={self.alpha_multiplier:.3f}, "
+                        f"\nSolving ALM iteration #{i+1} with lambda={self.alpha_multiplier:.3f}, "
                         f"rho={self.rho:.3f} for {self.num_steps[i]} steps"
                     )
                     
@@ -234,7 +237,7 @@ class AugmentedLagrangian(ConstrainedSolver):
             self.vprint(f"Current h(W): {h:.4f}")
             self.alpha_multiplier += self.rho * h
             if h <= self.h_tol or self.rho >= self.rho_max:
-                break
+                end = True
 
 
 

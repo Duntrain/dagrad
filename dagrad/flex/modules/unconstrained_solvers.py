@@ -27,7 +27,7 @@ class GradientBasedSolver(UnconstrainedSolver):
         optimizer: torch.optim.Optimizer,
         num_steps: Optional[int] = None,
         tol: Optional[float] = 1e-6,
-        logging_steps: Optional[int] = 1e4,
+        logging_steps: Optional[int] = 1e3,
     ):
         super().__init__()
         self.optimizer = optimizer
