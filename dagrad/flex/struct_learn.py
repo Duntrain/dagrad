@@ -19,8 +19,44 @@ def struct_learn(
     verbose: bool = False,
     suppress_warnings: bool = False,
 ):
-    """Learn DAG structure using DAGMA algorithm with linear structural equation."""
-
+    """
+    Perform structural learning of a directed acyclic graph (DAG) from data.
+    The function estimates the adjacency matrix of the DAG by solving a constrained optimization problem.
+    
+    Parameters
+    ----------
+    dataset : array-like or torch.Tensor
+        The input dataset of shape (n_samples, n_features).
+    model : object
+        The SEM object that contains the adjacency matrix to be learned.
+    constrained_solver : object
+        Solver for the constrained optimization problem.
+    unconstrained_solver : object
+        Solver for the unconstrained optimization problem.
+    loss_fn : object
+        Loss function object defining the fitting criterion.
+    dag_fn : object
+        Function object implementing the continuous DAG constraint.
+    w_threshold : float, optional (default=0.3)
+        Threshold value for pruning small weights in the estimated adjacency matrix.
+    device : str, optional (default="cpu")
+        Device to perform computations on ('cpu' or 'cuda').
+    dtype : torch.dtype, optional (default=torch.double)
+        Data type for torch tensors.
+    verbose : bool, optional (default=False)
+        If True, print detailed progress information.
+    suppress_warnings : bool, optional (default=False)
+        If True, suppress warning messages.
+    Returns
+    -------
+    numpy.ndarray
+        The estimated adjacency matrix with small weights thresholded to zero.
+    Notes
+    -----
+    - If the loss function is MSELoss, the data is centered before processing.
+    - The function automatically converts input data to torch.Tensor if needed.
+    - Both solvers are configured with the specified dtype and device.
+    """
     vprint = print if verbose else lambda *a, **k: None
     vwarn = warn if not suppress_warnings else lambda *a, **k: None
     torch.set_default_dtype(dtype)
