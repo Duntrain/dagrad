@@ -178,14 +178,13 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad.core</span> <span class="kn">import</span> <span class="n">dagrad</span>
-<span class="kn">from</span> <span class="nn">dagrad.utils</span> <span class="kn">import</span> <span class="n">utils</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad</span> <span class="kn">import</span> <span class="n">learn</span><span class="p">,</span> <span class="n">generate_linear_data</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="c1"># Define the parameters of the data</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
 
 <span class="c1"># Generate the data</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span><span class="p">)</span>
 
 <span class="c1"># Define the model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
@@ -205,7 +204,7 @@
 <span class="p">}</span>
 
 <span class="c1"># Learn the DAG</span>
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
 
 <span class="c1"># Use cross-validation to tune the default regularization parameters with l1 penalty</span>
 <span class="n">reg</span> <span class="o">=</span> <span class="s1">&#39;l1&#39;</span>
@@ -214,7 +213,7 @@
     <span class="s1">&#39;initialization&#39;</span><span class="p">:</span> <span class="n">initialization</span>
     <span class="s1">&#39;turning_method&#39;</span><span class="p">:</span> <span class="s1">&#39;cv&#39;</span><span class="p">,</span> <span class="c1"># or &#39;decay&#39;</span>
 <span class="p">}</span>
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
 
 <span class="c1"># Or specify the regularization parameters with l1 penalty and number of folds by yourself</span>
 <span class="n">general_options</span> <span class="o">=</span> <span class="p">{</span>
@@ -224,7 +223,8 @@
     <span class="s1">&#39;K&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
     <span class="s1">&#39;reg_paras&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span> <span class="c1">#</span>
 <span class="p">}</span>
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
+
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
 
 <span class="c1"># Or MCP penalty with hyperparameters lambda1, gamma and use decay search for faster computation</span>
 <span class="n">reg</span> <span class="o">=</span> <span class="s1">&#39;mcp&#39;</span>
@@ -235,7 +235,7 @@
     <span class="s1">&#39;reg_paras&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="c1"># first is lambda1s, and second is gammas</span>
 <span class="p">}</span>
 
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">general_options</span><span class="o">=</span><span class="n">general_options</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -347,14 +347,13 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad.core</span> <span class="kn">import</span> <span class="n">dagrad</span>
-<span class="kn">from</span> <span class="nn">dagrad.utils</span> <span class="kn">import</span> <span class="n">utils</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad</span> <span class="kn">import</span> <span class="n">learn</span><span class="p">,</span> <span class="n">generate_linear_data</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="c1"># Define the parameters of the data</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
 
 <span class="c1"># Generate the data</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span><span class="p">)</span>
 
 <span class="c1"># Define the model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
@@ -363,7 +362,7 @@
 <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;h_tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="s1">&#39;}</span>
 
 <span class="c1"># Learn the DAG using Notears, linear model, numpy, and adam optimizer</span>
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">method_options</span><span class="o">=</span><span class="n">method_options</span><span class="p">)</span>
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">method_options</span><span class="o">=</span><span class="n">method_options</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -487,14 +486,13 @@ The examples are given below.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad.core</span> <span class="kn">import</span> <span class="n">dagrad</span>
-<span class="kn">from</span> <span class="nn">dagrad.utils</span> <span class="kn">import</span> <span class="n">utils</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dagrad</span> <span class="kn">import</span> <span class="n">learn</span><span class="p">,</span> <span class="n">generate_linear_data</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="c1"># Define the parameters of the data</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
 
 <span class="c1"># Generate the data</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span><span class="p">)</span>
 
 <span class="c1"># Define the model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
@@ -503,7 +501,7 @@ The examples are given below.</p>
 <span class="n">optimizer_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lr&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">betas</span><span class="p">:(</span><span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">),</span> <span class="s1">&#39;eps&#39;</span><span class="p">:</span><span class="mf">1e-8</span><span class="p">,</span> <span class="s1">&#39;check_iterate&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="s1">&#39;num_steps&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">}</span>
 
 <span class="c1"># Learn the DAG using Notears, linear model, numpy, and adam optimizer</span>
-<span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">computed_lib</span> <span class="o">=</span> <span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">optimizer_options</span><span class="o">=</span><span class="n">optimizer_options</span><span class="p">)</span>
+<span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">computed_lib</span> <span class="o">=</span> <span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">optimizer_options</span><span class="o">=</span><span class="n">optimizer_options</span><span class="p">)</span>
 </pre></div>
 </div>
 <aside class="footnote-list brackets">

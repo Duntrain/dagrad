@@ -24,13 +24,13 @@ This section contains the customization options of the **dagrad** library. These
      - Acyclicity function
      - :func:`dagrad.hfunction.h_functions.h_fn.user_h`
 
-Go to the corresponding function and modify the function according to your needs. After you modified the loss function, regularization, and acyclicity function, you use them in the :func:`dagrad.core.dagrad` by setting the parameters ``loss_fn = 'user_loss'``, ``reg = 'user_reg'``, and ``h = 'user_h'``.
+Go to the corresponding function and modify the function according to your needs. After you modified the loss function, regularization, and acyclicity function, you use them in the :func:`dagrad.learn` by setting the parameters ``loss_fn = 'user_loss'``, ``reg = 'user_reg'``, and ``h = 'user_h'``.
 
 .. code-block:: python
 
-    from dagrad.core import dagrad
+    from dagrad import learn
     
-    W_est = dagrad(X, loss_fn='user_loss', reg='user_reg', h='user_h')
+    W_est = learn(X, loss_fn='user_loss', reg='user_reg', h='user_h')
 
 
 Loss function(``'loss_fn'``)

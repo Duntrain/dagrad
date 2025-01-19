@@ -67,14 +67,13 @@ The following options are available for all methods. Its specification can be do
        loss, regularization, and acyclicity constraint functions.
 .. code-block:: python
 
-    from dagrad.core import dagrad
-    from dagrad.utils import utils
+    from dagrad import learn, generate_linear_data
     import numpy as np
     # Define the parameters of the data
-    n, d, s0, graph_type, sem_type = 1000, 10, 10, 'ER', 'gauss'
+    n, d, s0, graph_type, noise_type = 1000, 10, 10, 'ER', 'gauss'
     
     # Generate the data
-    X, W_true, B_true = utils.generate_linear_data(n, d, s0, graph_type, sem_type)
+    X, W_true, B_true = generate_linear_data(n, d, s0, graph_type, noise_type)
     
     # Define the model
     model = 'linear'
@@ -94,7 +93,7 @@ The following options are available for all methods. Its specification can be do
     }
     
     # Learn the DAG
-    W_est = dagrad(X, method='notears', general_options=general_options)
+    W_est = learn(X, method='notears', general_options=general_options)
 
     # Use cross-validation to tune the default regularization parameters with l1 penalty
     reg = 'l1'
@@ -103,7 +102,7 @@ The following options are available for all methods. Its specification can be do
         'initialization': initialization
         'turning_method': 'cv', # or 'decay'
     }
-    W_est = dagrad(X, method='notears', reg = reg, general_options=general_options)
+    W_est = learn(X, method='notears', reg = reg, general_options=general_options)
 
     # Or specify the regularization parameters with l1 penalty and number of folds by yourself
     general_options = {
@@ -113,7 +112,8 @@ The following options are available for all methods. Its specification can be do
         'K': 5,
         'reg_paras': [0, 0.1, 0.2, 0.3, 0.4, 0.5] #
     }
-    W_est = dagrad(X, method='notears',reg = reg, general_options=general_options)
+
+    W_est = learn(X, method='notears',reg = reg, general_options=general_options)
 
     # Or MCP penalty with hyperparameters lambda1, gamma and use decay search for faster computation
     reg = 'mcp'
@@ -124,7 +124,7 @@ The following options are available for all methods. Its specification can be do
         'reg_paras': [[0, 0.05, 0.1, 0.2, 0.3, 0.5], [0.1, 0.2, 0.3, 0.4, 0.5, 1]] # first is lambda1s, and second is gammas
     }
 
-    W_est = dagrad(X, method='notears', reg = reg, general_options=general_options)
+    W_est = learn(X, method='notears', reg = reg, general_options=general_options)
 
 Method Options
 ^^^^^^^^^^^^^^^^
@@ -215,14 +215,13 @@ The following options are available for different methods under :code:`'linear'`
 
 .. code-block:: python
 
-    from dagrad.core import dagrad
-    from dagrad.utils import utils
+    from dagrad import learn, generate_linear_data
     import numpy as np
     # Define the parameters of the data
-    n, d, s0, graph_type, sem_type = 1000, 10, 10, 'ER', 'gauss'
+    n, d, s0, graph_type, noise_type = 1000, 10, 10, 'ER', 'gauss'
     
     # Generate the data
-    X, W_true, B_true = utils.generate_linear_data(n, d, s0, graph_type, sem_type)
+    X, W_true, B_true = generate_linear_data(n, d, s0, graph_type, noise_type)
     
     # Define the model
     model = 'linear'
@@ -231,7 +230,7 @@ The following options are available for different methods under :code:`'linear'`
     method_options = {'verbose': True, 'h_tol': 1e-9, 'rho': 0.1'}
     
     # Learn the DAG using Notears, linear model, numpy, and adam optimizer
-    W_est = dagrad(X, method='notears', model = model, optimizer = 'adam', method_options=method_options)
+    W_est = learn(X, method='notears', model = model, optimizer = 'adam', method_options=method_options)
 
 Optimizer Options
 ^^^^^^^^^^^^^^^^^^^^
@@ -310,14 +309,13 @@ The examples are given below.
 
 .. code-block:: python
 
-    from dagrad.core import dagrad
-    from dagrad.utils import utils
+    from dagrad import learn, generate_linear_data
     import numpy as np
     # Define the parameters of the data
-    n, d, s0, graph_type, sem_type = 1000, 10, 10, 'ER', 'gauss'
+    n, d, s0, graph_type, noise_type = 1000, 10, 10, 'ER', 'gauss'
     
     # Generate the data
-    X, W_true, B_true = utils.generate_linear_data(n, d, s0, graph_type, sem_type)
+    X, W_true, B_true = generate_linear_data(n, d, s0, graph_type, noise_type)
     
     # Define the model
     model = 'linear'
@@ -326,7 +324,7 @@ The examples are given below.
     optimizer_options = {'lr':0.01, betas:(0.99, 0.999), 'eps':1e-8, 'check_iterate': 100, 'tol': 1e-6, 'num_steps': 10000}
     
     # Learn the DAG using Notears, linear model, numpy, and adam optimizer
-    W_est = dagrad(X, method='notears', model = model, computed_lib = 'numpy', optimizer = 'adam', optimizer_options=optimizer_options)
+    W_est = learn(X, method='notears', model = model, computed_lib = 'numpy', optimizer = 'adam', optimizer_options=optimizer_options)
 
 
 .. [1] Deng, Chang, Kevin Bello, Pradeep Kumar Ravikumar, and Bryon Aragam. "Likelihood-based differentiable structure learning" Advances in Neural Information Processing Systems 37 (2024)

@@ -114,15 +114,15 @@
 <span class="kn">from</span> <span class="nn">.utils.configure</span> <span class="kn">import</span> <span class="n">METHODS</span><span class="p">,</span> <span class="n">OPTIMIZERS</span><span class="p">,</span> <span class="n">LOSS_FUNCTIONS</span><span class="p">,</span> <span class="n">H_FUNCTIONS</span><span class="p">,</span> <span class="n">REGULARIZERS</span>
 <span class="kn">from</span> <span class="nn">.utils.configure</span> <span class="kn">import</span> <span class="n">allowed_general_options</span><span class="p">,</span> <span class="n">allowed_method_options</span><span class="p">,</span> <span class="n">allowed_optimizer_options</span><span class="p">,</span> <span class="n">loss_functions</span>
 <span class="kn">from</span> <span class="nn">.utils.general_utils</span> <span class="kn">import</span> <span class="n">validate_options</span><span class="p">,</span> <span class="n">merge_dicts_if_needed</span><span class="p">,</span><span class="n">get_default</span><span class="p">,</span> <span class="n">set_tuning_method_from_options</span><span class="p">,</span> <span class="n">set_functions</span>
-<span class="kn">from</span> <span class="nn">.utils.utils</span> <span class="kn">import</span> <span class="n">is_dag</span><span class="p">,</span> <span class="n">threshold_till_dag</span><span class="p">,</span> <span class="n">simulate_dag</span><span class="p">,</span> <span class="n">simulate_linear_sem</span><span class="p">,</span> <span class="n">simulate_nonlinear_sem</span><span class="p">,</span> <span class="n">set_random_seed</span><span class="p">,</span> <span class="n">simulate_parameter</span><span class="p">,</span> <span class="n">count_accuracy</span><span class="p">,</span> <span class="n">generate_linear_data</span><span class="p">,</span> <span class="n">generate_nonlinear_data</span>
+<span class="kn">from</span> <span class="nn">.utils.utils</span> <span class="kn">import</span> <span class="n">is_dag</span><span class="p">,</span> <span class="n">threshold_till_dag</span><span class="p">,</span> <span class="n">set_random_seed</span><span class="p">,</span> <span class="n">count_accuracy</span><span class="p">,</span> <span class="n">generate_linear_data</span><span class="p">,</span> <span class="n">generate_nonlinear_data</span>
 <span class="kn">from</span> <span class="nn">.method.notears</span> <span class="kn">import</span> <span class="n">notears_linear_numpy</span><span class="p">,</span><span class="n">notears_linear_torch</span><span class="p">,</span> <span class="n">notears_nonlinear</span>
 <span class="kn">from</span> <span class="nn">.method.dagma</span> <span class="kn">import</span> <span class="n">dagma_linear_numpy</span><span class="p">,</span> <span class="n">dagma_linear_torch</span><span class="p">,</span><span class="n">dagma_nonlinear</span>
 <span class="kn">from</span> <span class="nn">.method.topo</span> <span class="kn">import</span> <span class="n">topo_linear</span><span class="p">,</span> <span class="n">topo_nonlinear</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dagrad&#39;</span><span class="p">,</span><span class="s1">&#39;topo&#39;</span><span class="p">,</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span><span class="s1">&#39;dagma&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;learn&#39;</span><span class="p">,</span><span class="s1">&#39;topo&#39;</span><span class="p">,</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span><span class="s1">&#39;dagma&#39;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="dagrad"><a class="viewcode-back" href="../../main_function.html#dagrad.core.dagrad">[docs]</a><span class="k">def</span> <span class="nf">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> 
+<div class="viewcode-block" id="learn"><a class="viewcode-back" href="../../main_function.html#dagrad.core.learn">[docs]</a><span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> 
             <span class="n">method</span><span class="o">=</span><span class="s1">&#39;notears&#39;</span><span class="p">,</span> 
             <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
             <span class="n">loss_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -615,7 +615,7 @@
 
 <div class="viewcode-block" id="notears"><a class="viewcode-back" href="../../main_function.html#dagrad.core.notears">[docs]</a><span class="k">def</span> <span class="nf">notears</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This is a wrapper function for dagrad with method notears, it calls the original notears implementation</span>
+<span class="sd">    This is a wrapper function for learn function with method notears, it calls the original notears implementation</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -629,12 +629,12 @@
 <span class="sd">    W_est : numpy.array of shape :math:`(p, p)`</span>
 <span class="sd">        The estimated adjacency matrix of the DAG.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;notears&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">W_est</span></div>
 
 <div class="viewcode-block" id="dagma"><a class="viewcode-back" href="../../main_function.html#dagrad.core.dagma">[docs]</a><span class="k">def</span> <span class="nf">dagma</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This is a wrapper function for dagrad with method dagma, it calls the original dagma implementation</span>
+<span class="sd">    This is a wrapper function for learn function with method dagma, it calls the original dagma implementation</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -648,12 +648,12 @@
 <span class="sd">    W_est : numpy.array of shape :math:`(p, p)`</span>
 <span class="sd">        The estimated adjacency matrix of the DAG.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;dagma&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;dagma&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">W_est</span></div>
 
 <div class="viewcode-block" id="topo"><a class="viewcode-back" href="../../main_function.html#dagrad.core.topo">[docs]</a><span class="k">def</span> <span class="nf">topo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This is a wrapper function for dagrad with method topo</span>
+<span class="sd">    This is a wrapper function for learn function with method topo</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -667,21 +667,21 @@
 <span class="sd">    W_est : numpy.array of shape :math:`(p, p)`</span>
 <span class="sd">        The estimated adjacency matrix of the DAG.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">W_est</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;topo&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">W_est</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span> <span class="s1">&#39;topo&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">W_est</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">set_random_seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">sem_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">s0</span><span class="p">,</span><span class="n">graph_type</span><span class="p">,</span><span class="n">sem_type</span><span class="p">)</span> <span class="c1"># Generate the data</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">noise_type</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;ER&#39;</span><span class="p">,</span> <span class="s1">&#39;gauss&#39;</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">W_true</span><span class="p">,</span> <span class="n">B_true</span> <span class="o">=</span> <span class="n">generate_linear_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">s0</span><span class="p">,</span><span class="n">graph_type</span><span class="p">,</span><span class="n">noise_type</span><span class="p">)</span> <span class="c1"># Generate the data</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span> <span class="c1"># Define the model</span>
-    <span class="n">W_notears</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;notears&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Notears</span>
-    <span class="n">W_dagma</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;dagma&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Dagma</span>
-    <span class="n">W_topo</span> <span class="o">=</span> <span class="n">dagrad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;topo&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Topo</span>
+    <span class="n">W_notears</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;notears&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Notears</span>
+    <span class="n">W_dagma</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;dagma&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Dagma</span>
+    <span class="n">W_topo</span> <span class="o">=</span> <span class="n">learn</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;topo&#39;</span><span class="p">)</span> <span class="c1"># Learn the structure of the DAG using Topo</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Linear Model&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data size: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, graph type: </span><span class="si">{</span><span class="n">graph_type</span><span class="si">}</span><span class="s2">, sem type: </span><span class="si">{</span><span class="n">sem_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data size: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, graph type: </span><span class="si">{</span><span class="n">graph_type</span><span class="si">}</span><span class="s2">, sem type: </span><span class="si">{</span><span class="n">noise_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">acc_notears</span> <span class="o">=</span> <span class="n">count_accuracy</span><span class="p">(</span><span class="n">B_true</span><span class="p">,</span> <span class="n">W_notears</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># Measure the accuracy of the learned structure using Notears</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy of Notears:&#39;</span><span class="p">,</span> <span class="n">acc_notears</span><span class="p">)</span>
@@ -693,7 +693,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy of Topo:&#39;</span><span class="p">,</span> <span class="n">acc_topo</span><span class="p">)</span>
 
     <span class="c1"># test cross validation for linear model with method notears</span>
-    <span class="c1"># W_est = dagrad(X = X, method = &#39;notears&#39;, reg = &#39;l1&#39;, general_options = {&#39;tuning_method&#39;:&#39;cv&#39;})</span>
+    <span class="c1"># W_est = learn(X = X, method = &#39;notears&#39;, reg = &#39;l1&#39;, general_options = {&#39;tuning_method&#39;:&#39;cv&#39;})</span>
     <span class="c1"># acc = count_accuracy(B_true, W_est != 0)</span>
     <span class="c1"># print(acc)</span>
 
@@ -711,13 +711,13 @@
     <span class="c1"># X = utils.simulate_nonlinear_sem(B_true, n, sem_type)</span>
     
     <span class="c1"># # test for nonlinear model with method notears with default options</span>
-    <span class="c1"># W_est = dagrad(X = X, method = &#39;notears&#39;, model = &#39;nonlinear&#39;)</span>
+    <span class="c1"># W_est = learn(X = X, method = &#39;notears&#39;, model = &#39;nonlinear&#39;)</span>
 
     <span class="c1"># # test for nonlinear model with method dagma with default options</span>
-    <span class="c1"># W_est = dagrad(X = X, method = &#39;dagma&#39;, model = &#39;nonlinear&#39;)</span>
+    <span class="c1"># W_est = learn(X = X, method = &#39;dagma&#39;, model = &#39;nonlinear&#39;)</span>
 
     <span class="c1"># # test for nonlinear model with method topo with default options</span>
-    <span class="c1"># W_est = dagrad(X = X, method = &#39;topo&#39;, model = &#39;nonlinear&#39;)</span>
+    <span class="c1"># W_est = learn(X = X, method = &#39;topo&#39;, model = &#39;nonlinear&#39;)</span>
 
     <span class="c1"># acc = utils.count_accuracy(B_true, W_est != 0)</span>
     <span class="c1"># print(acc)</span>
