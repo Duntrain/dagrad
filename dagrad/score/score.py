@@ -178,6 +178,7 @@ class loss_fn:
 
         Args:
         W: ndarray, shape (n_nodes,n_nodes)
+        X: ndarray, shape (n_samples, n_nodes)
         """
         if isinstance(W, np.ndarray):
             mean = np.mean(X, axis=0)
@@ -201,6 +202,48 @@ class loss_fn:
         else:
             raise ValueError("W must be either numpy array or torch tensor")
         
+    @staticmethod
+    def logdetll_ev_loss(W, X, **kwargs):
+        """
+        Calculate the logdet loglikelihood loss assuming equal noise variance
+
+        Args:
+        W: ndarray, shape (n_nodes,n_nodes)
+        X: ndarray, shape (n_samples, n_nodes)
+        """
+        if isinstance(W, np.ndarray):
+            raise ValueError("logdetll_ev_loss is not implemented for numpy")
+        elif isinstance(W, torch.Tensor):
+            return (
+                0.5
+                * W.shape[0]
+                * torch.log(torch.square(torch.linalg.matrix_norm(X - X @ W)))
+                - torch.linalg.slogdet(torch.eye(W.shape[1]) - W)[1]
+            )
+
+        else:
+            raise ValueError("W must be either numpy array or torch tensor")
+
+    @staticmethod
+    def logdetll_nv_loss(W, X, **kwargs):
+        """
+        Calculate the logdet loglikelihood loss assuming non-equal noise variance
+
+        Args:
+        W: ndarray, shape (n_nodes,n_nodes)
+        X: ndarray, shape (n_samples, n_nodes)
+        """
+        if isinstance(W, np.ndarray):
+            raise ValueError("logdetll_nv_loss is not implemented for numpy")
+        elif isinstance(W, torch.Tensor):
+            return (
+                0.5 * torch.sum(torch.log(torch.sum(torch.square(X - X @ W), axis=0)))
+                - torch.linalg.slogdet(torch.eye(W.shape[1]) - W)[1]
+            )
+
+        else:
+            raise ValueError("W must be either numpy array or torch tensor")
+
 
 class nl_loss_fn:
     @staticmethod

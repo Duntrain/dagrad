@@ -40,7 +40,7 @@ def dagrad(X,
         The model of data generating process . One of [:code:`'linear'`, :code:`'nonlinear'`]. If None, it is set to :code:`'linear'`.
 
     loss_fn : str, default=None
-        The loss function to use. One of [:code:`'l2'`, :code:`'logistic'`, :code:`'logll'`, :code:`'user_loss'`]. If None, it is set to :code:`'l2'`.
+        The loss function to use. One of [:code:`'l2'`, :code:`'logistic'`, :code:`'logll'`, :code:`'logdetll_ev'`, :code:`'logdetll_nv'` :code:`'user_loss'`]. If None, it is set to :code:`'l2'`.
         
         - For :code:`'user_loss'`, is not implemented yet, and it can be customized by the user.
 

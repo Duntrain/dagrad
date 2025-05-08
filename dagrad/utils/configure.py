@@ -10,7 +10,7 @@ import torch.nn as nn
 
 METHODS = ['notears', 'topo', 'dagma']
 OPTIMIZERS = ['adam', 'lbfgs','sklearn']
-LOSS_FUNCTIONS = ['l2', 'logistic', 'logll', 'user_loss']
+LOSS_FUNCTIONS = ['l2', 'logistic', 'logll', 'logdetll_ev', 'logdetll_nv', 'user_loss']
 H_FUNCTIONS = ['h_exp_sq', 'h_logdet_sq', 'h_poly_sq', 'h_exp_abs', 'h_logdet_abs', 'h_poly_abs',
                'h_exp_topo', 'h_logdet_topo', 'h_poly_topo', 'user_h']
 REGULARIZERS = ['l1', 'l2', 'mcp', 'none', 'user_reg']
@@ -198,6 +198,8 @@ loss_functions = {
     'l2': loss_fn.l2_loss,
     'logistic': loss_fn.logistic_loss,
     'logll': loss_fn.logll_loss,
+    'logdetll_ev': loss_fn.logdetll_ev_loss,
+    'logdetll_nv': loss_fn.logdetll_nv_loss,
     'user_loss': loss_fn.user_loss
     # Add more mappings as needed
 }
